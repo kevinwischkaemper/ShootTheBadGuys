@@ -19,7 +19,7 @@ function levelFactory(physicsFactory, actorFactory) {
                 var terrainType = null;
                 var Actor = actorFactory.actorChars[char];
                 if (Actor) {
-                    this.actors.push(new Actor(new physicsFactory.Vector(x, y), char));
+                    this.actors.push(new Actor(new physicsFactory.Vector(x, y)));
                 }
                 else if (char == "#")
                     terrainType = "rock";
@@ -68,7 +68,12 @@ function levelFactory(physicsFactory, actorFactory) {
     Level.prototype.animate = function (step, staticKeys, pressKeys) {
         if (this.status != null)
             this.finishDelay -= step;
-
+        if (this.actors.filter(function(actor){return actor.type == "enemy"}).length == 0){
+            if (this.status != "won")
+                this.finishDelay = 1;
+            this.status = "won";
+            
+        }
         while (step > 0) {
             var thisStep = Math.min(step, vm.maxStep);
             this.actors.forEach(function (actor) {
@@ -103,10 +108,11 @@ function levelFactory(physicsFactory, actorFactory) {
         this.actors = this.actors.filter(function (other) {
                  return other != actor;
              });
+             
     }
     Level.prototype.bulletTouchedActor = function(bullet,actor){
         if (actor.type == "player" || actor.type == "enemy"){
-            actor.kill();
+            actor.kill(this);
         }
         this.removeActor(bullet);
     }

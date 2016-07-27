@@ -1,8 +1,8 @@
 angular.module('app')
     .config(Config);
 
-Config.$inject = ['$stateProvider'];
-function Config($stateProvider){
+Config.$inject = ['$stateProvider','$urlRouterProvider'];
+function Config($stateProvider, $urlRouterProvider){
     $stateProvider.state('home',{
         url:'/home',
         controller:'HomeController',
@@ -15,6 +15,7 @@ function Config($stateProvider){
         controllerAs:'gc',
         templateUrl:'templates/Game.html'
     });
+    $urlRouterProvider.otherwise('/game');
 };
 
 angular.module('app')

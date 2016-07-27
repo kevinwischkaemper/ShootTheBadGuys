@@ -3,7 +3,7 @@ angular.module('app')
 drawingFactory.$inject=[];
 function drawingFactory(){
     var vm = this;
-    vm.scale = 10;
+    vm.scale = 25;
     function element(name,className){
         var element = document.createElement(name);
         if(className) element.className = className;
@@ -65,7 +65,7 @@ function drawingFactory(){
             this.wrap.scrollTop = center.y + margin - height;
     };
     DOMDisplay.prototype.clear = function(){
-        this.wrapper.parentNode.removeChild(this.wrapper);
+        this.wrapper.html('');
     };
 
     return {

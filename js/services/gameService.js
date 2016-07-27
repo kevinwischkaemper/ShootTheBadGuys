@@ -69,10 +69,11 @@ function gameService(dataStore,levelFactory) {
             runLevel(new levelFactory.Level(vm.plans[n]), vm.display, function (status) {
                 if (status == "lost")
                     startLevel(n);
-                else if (n < plans.length - 1)
+                else if (n < vm.plans.length - 1)
                     startLevel(n + 1);
                 else
-                    console.log("You win!");
+                    startLevel(n);
+                    // console.log("You win!");
             },element);
         }
         startLevel(0);
